@@ -129,4 +129,99 @@ describe("CDGS-JS", function () {
         });
     });
 
+    describe("getProfileData", function () {
+        var cgds;
+        beforeEach(function () {
+            cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+        });
+        it("should throw an error if a case_set_id parameter is not provided", function () {
+            expect(function () {
+                cgds.getProfileData();
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a case_set_id parameter.");
+            });
+        });
+        it("should throw an error if a genetic_profile_id parameter is not provided", function () {
+            expect(function () {
+                cgds.getProfileData("brca_tcga_3way_complete");
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a genetic_profile_id parameter.");
+            });
+        });
+        it("should throw an error if a gene_list parameter is not provided", function () {
+            expect(function () {
+                cgds.getProfileData("brca_tcga_3way_complete", "brca_tcga_mutations");
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a gene_list parameter.");
+            });
+        });
+        it("should throw an error if a callback parameter is not provided", function () {
+            expect(function () {
+                cgds.getProfileData("brca_tcga_3way_complete", "brca_tcga_mutations", "TP53");
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a callback parameter.");
+            });
+        });
+        it("should return a JSON representation of a tab-delimited file with two + N columns when requesting a single gene and a single genetic profile", function (done) {
+            cgds.getCaseLists("brca_tcga", function (err, res) {
+                var numPatients;
+                expect(res[0].case_list_id).to.be("brca_tcga_3way_complete");
+                numPatients = res[0].case_ids.trim().split(" ").length;
+                cgds.getProfileData("brca_tcga_3way_complete", "brca_tcga_mutations", "TP53", function (err, res) {
+                    expect(res).to.be.a(Array);
+                    expect(res.length).to.be.greaterThan(0);
+                    expect(Object.keys(res[0])).to.contain("GENE_ID");
+                    expect(Object.keys(res[0])).to.contain("COMMON");
+                    expect(Object.keys(res[0]).length).to.be(2 + numPatients);
+                    done();
+                });
+            });
+        });
+        it("should return a JSON representation of a tab-delimited file with two + N columns when requesting more than one gene and a single genetic profile", function (done) {
+            cgds.getCaseLists("brca_tcga", function (err, res) {
+                var numPatients;
+                expect(res[0].case_list_id).to.be("brca_tcga_3way_complete");
+                numPatients = res[0].case_ids.trim().split(" ").length;
+                cgds.getProfileData("brca_tcga_3way_complete", "brca_tcga_mutations", ["TP53", "GATA3"], function (err, res) {
+                    expect(res).to.be.a(Array);
+                    expect(res.length).to.be.greaterThan(0);
+                    expect(Object.keys(res[0])).to.contain("GENE_ID");
+                    expect(Object.keys(res[0])).to.contain("COMMON");
+                    expect(Object.keys(res[0]).length).to.be(2 + numPatients);
+                    done();
+                });
+            });
+        });
+        it("should return a JSON representation of a tab-delimited file with four + N columns when requesting a single gene and more than one genetic profile", function (done) {
+            cgds.getCaseLists("brca_tcga", function (err, res) {
+                var numPatients;
+                expect(res[0].case_list_id).to.be("brca_tcga_3way_complete");
+                numPatients = res[0].case_ids.trim().split(" ").length;
+                cgds.getProfileData("brca_tcga_3way_complete", ["brca_tcga_mutations", "brca_tcga_log2CNA"], "TP53", function (err, res) {
+                    expect(res).to.be.a(Array);
+                    expect(res.length).to.be.greaterThan(0);
+                    expect(Object.keys(res[0])).to.contain("GENETIC_PROFILE_ID");
+                    expect(Object.keys(res[0])).to.contain("ALTERATION_TYPE");
+                    expect(Object.keys(res[0])).to.contain("GENE_ID");
+                    expect(Object.keys(res[0])).to.contain("COMMON");
+                    expect(Object.keys(res[0]).length).to.be(4 + numPatients);
+                    done();
+                });
+            });
+        });
+        it("should fail if multiple genes and multiple genetic profiles are used at the same time", function () {
+            expect(function () {
+                cgds.getProfileData("brca_tcga_3way_complete", ["brca_tcga_mutations", "brca_tcga_log2CNA"], ["TP53", "GATA3"], function () {});
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("You can specify multiple genes or multiple genetic profiles, but not both at once!");
+            });
+        });
+
+    });
+
 });
