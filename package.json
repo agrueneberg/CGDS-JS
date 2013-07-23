@@ -1,6 +1,6 @@
 {
     "name": "cgds",
-    "description": "A wrapper for cBioPortal's Cancer Genomic Data Server (CGDS).",
+    "description": "A module for querying the Cancer Genomics Data Server (CGDS).",
     "version": "0.0.1",
     "author": {
         "name": "Alexander Grüneberg",
