@@ -295,4 +295,35 @@ describe("CDGS-JS", function () {
         });
     });
 
+    describe("getClinicalData", function () {
+        var cgds;
+        beforeEach(function () {
+            cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+        });
+        it("should throw an error if a case_set_id parameter is not provided", function () {
+            expect(function () {
+                cgds.getClinicalData();
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a case_set_id parameter.");
+            });
+        });
+        it("should throw an error if a callback parameter is not provided", function () {
+            expect(function () {
+                cgds.getClinicalData("brca_tcga");
+            }).to.throwException(function (e) {
+                expect(e).to.be.a(Error);
+                expect(e.message).to.be("Please provide a callback parameter.");
+            });
+        });
+        it("should return a JSON representation of a tab-delimited file with six columns", function (done) {
+            cgds.getClinicalData("brca_tcga_3way_complete", function (err, res) {
+                expect(res).to.be.a(Array);
+                expect(res.length).to.be.greaterThan(0);
+                expect(Object.keys(res[0])).to.eql(["case_id", "overall_survival_months", "overall_survival_status", "disease_free_survival_months", "disease_free_survival_status", "age_at_diagnosis"]);
+                done();
+            });
+        });
+    });
+
 });
