@@ -16,23 +16,23 @@ API
 
 See [Web API](http://www.cbioportal.org/public-portal/web_api.jsp) for more details.
 
-### `getTypesOfCancer()`
+### `getTypesOfCancer(callback)`
 Retrieves a list of all the clinical types of cancer.
 
-### `getCancerStudies()`
+### `getCancerStudies(callback)`
 Retrieves meta-data regarding cancer studies.
 
-### `getGeneticProfiles(cancer_study_id)`
+### `getGeneticProfiles(cancer_study_id, callback)`
 Retrieves meta-data regarding all genetic profiles, e.g. mutation or copy number profiles, stored about a specific cancer study.
 
-### `getCaseLists(cancer_study_id)`
+### `getCaseLists(cancer_study_id, callback)`
 Retrieves meta-data regarding all case lists stored about a specific cancer study.
 
-### `getProfileData(case_set_id, genetic_profile_id, gene_list)`
+### `getProfileData(case_set_id, genetic_profile_id, gene_list, callback)`
 Retrieves genomic profile data for one or more genes.
 
-### `getMutationData(genetic_profile_id, case_set_id, gene_list)`
+### `getMutationData(genetic_profile_id, case_set_id, gene_list, callback)`
 Retrieves the full set of annotated extended mutation data.
 
-### `getClinicalData(case_set_id)`
+### `getClinicalData(case_set_id, callback)`
 Retrieves overall survival, disease free survival and age at diagnosis for specified cases.
