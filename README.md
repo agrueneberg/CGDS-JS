@@ -1,10 +1,12 @@
 CGDS-JS
 =======
 
-A Node.js module for querying the Cancer Genomics Data Server (CGDS), hosted by the Computational Biology Center at Memorial-Sloan-Kettering Cancer Center (MSKCC). Read more about this service at the [cBio Cancer Genomics Portal](http://www.cbioportal.org/public-portal/).
+A Node.js and browser module for querying the Cancer Genomics Data Server (CGDS), hosted by the Computational Biology Center at Memorial-Sloan-Kettering Cancer Center (MSKCC). Read more about this service at the [cBio Cancer Genomics Portal](http://www.cbioportal.org/public-portal/).
 
 Usage
 -----
+
+### Node.js
 
 1. Install it:
 
@@ -15,6 +17,22 @@ Usage
         var CGDS = require("cgds");
 
 3. Instantiate a CGDS client:
+
+        var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+
+4. See below for a list of methods.
+
+### Browser
+
+1. Include it:
+
+        <script src="http://agrueneberg.github.io/CGDS-JS/cgds.min.js"></script>
+
+2. Require it:
+
+        var CGDS = require("cgds");
+
+3. Instantiate a CGDS client (you will need a CORS proxy such as [Proxer](https://github.com/agrueneberg/Proxer) for this):
 
         var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
 
