@@ -6,10 +6,19 @@ A Node.js module for querying the Cancer Genomics Data Server (CGDS), hosted by 
 Usage
 -----
 
-1. Install it: `npm install cgds`
-2. Require it: `var CGDS = require("cgds");`
-3. Instantiate a CGDS client: `var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");`
-4. See API for a list of methods
+1. Install it:
+
+        npm install cgds
+
+2. Require it:
+
+        var CGDS = require("cgds");
+
+3. Instantiate a CGDS client:
+
+        var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+
+4. See API for a list of methods.
 
 API
 ---
