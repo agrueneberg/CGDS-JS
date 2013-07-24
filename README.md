@@ -3,6 +3,16 @@ CGDS-JS
 
 A Node.js and browser module for querying the Cancer Genomics Data Server (CGDS), hosted by the Computational Biology Center at Memorial-Sloan-Kettering Cancer Center (MSKCC). Read more about this service at the [cBio Cancer Genomics Portal](http://www.cbioportal.org/public-portal/).
 
+Example
+-------
+
+    var CGDS, cgds;
+    CGDS = require("cgds");
+    cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+    cgds.getMutationData("brca_tcga_mutations", ["TP53", "GATA3"], "brca_tcga_all", function (err, res) {
+        console.log(res);
+    });
+
 Usage
 -----
 
