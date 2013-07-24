@@ -14,9 +14,16 @@ describe("CDGS-JS", function () {
                 expect(e.message).to.be("Please provide a URL parameter.");
             });
         });
-        it("should return a CGDS object", function () {
+        it("should return a CGDS object if a URL string is provided", function () {
             var cgds;
             cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+            expect(cgds).to.be.a(CGDS);
+        });
+        it("should return a CGDS object if a URL object is provided", function () {
+            var cgds;
+            cgds = new CGDS({
+                url: "http://www.cbioportal.org/public-portal/webservice.do"
+            });
             expect(cgds).to.be.a(CGDS);
         });
     });
