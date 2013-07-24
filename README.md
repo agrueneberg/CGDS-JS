@@ -18,10 +18,10 @@ Usage
 
         var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
 
-4. See API for a list of methods.
+4. See below for a list of methods.
 
-API
----
+Methods
+-------
 
 See [Web API](http://www.cbioportal.org/public-portal/web_api.jsp) for more details.
 
