@@ -44,7 +44,10 @@ Usage
 
 3. Instantiate a CGDS client (you will need a CORS proxy such as [Proxer](https://github.com/agrueneberg/Proxer) for this):
 
-        var cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
+        var cgds = new CGDS({
+            url: "http://www.cbioportal.org/public-portal/webservice.do",
+            proxy: "http://example.com/corsproxy?url="
+        });
 
 4. See below for a list of methods.
 
