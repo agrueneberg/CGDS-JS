@@ -1,7 +1,7 @@
 {
     "name": "cgds",
     "description": "A module for querying the Cancer Genomics Data Server (CGDS).",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "author": {
         "name": "Alexander Grüneberg",
         "email": "alexander.grueneberg@googlemail.com"
