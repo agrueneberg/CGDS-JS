@@ -34,29 +34,45 @@ get = function (uri, proxy, callback) {
     });
 };
 
-toJSON = function (data) {
-    var lines, columns;
+toJSON = function (data, callback) {
+    var lines, errorTerms, errorOccured, columns;
  // Split lines.
     lines = data.split(/\r?\n/);
- // Drop comments.
+ // Drop comments and empty lines.
     lines = lines.filter(function (line) {
-        if (line.charAt(0) === "#") {
+        if (line.charAt(0) === "#" || line === "") {
             return false;
         } else {
             return true;
         }
     });
- // Convert to JSON.
-    columns = lines.shift().split(/\t/);
-    lines = lines.map(function (line) {
-        var obj;
-        obj = {};
-        line.split(/\t/).forEach(function (column, idx) {
-            obj[columns[idx]] = column;
-        });
-        return obj;
+ // If the first line starts with "Error: " or in some buggy cases with the whole
+ // error string after dropping the comments, then it is likely to be an error.
+    errorTerms = ["Error: ", "No genetic profile available for genetic_profile_id: "];
+    errorOccured = errorTerms.some(function (errorTerm) {
+        if (lines[0].lastIndexOf(errorTerm, 0) === 0) {
+            return true;
+        } else {
+            return false;
+        }
     });
-    return lines;
+    if (errorOccured === true) {
+        callback({
+            message: lines[0]
+        }, null);
+    } else {
+     // Convert to JSON.
+        columns = lines.shift().split(/\t/);
+        lines = lines.map(function (line) {
+            var obj;
+            obj = {};
+            line.split(/\t/).forEach(function (column, idx) {
+                obj[columns[idx]] = column;
+            });
+            return obj;
+        });
+        callback(null, lines);
+    }
 };
 
 CGDS = function (url) {
@@ -77,7 +93,7 @@ CGDS.prototype.getTypesOfCancer = function (callback) {
         throw new Error("Please provide a callback parameter.");
     }
     get(this.url + "?cmd=getTypesOfCancer", this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -86,7 +102,7 @@ CGDS.prototype.getCancerStudies = function (callback) {
         throw new Error("Please provide a callback parameter.");
     }
     get(this.url + "?cmd=getCancerStudies", this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -98,7 +114,7 @@ CGDS.prototype.getGeneticProfiles = function (cancerStudyId, callback) {
         throw new Error("Please provide a callback parameter.");
     }
     get(this.url + "?cmd=getGeneticProfiles&cancer_study_id=" + cancerStudyId, this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -110,7 +126,7 @@ CGDS.prototype.getCaseLists = function (cancerStudyId, callback) {
         throw new Error("Please provide a callback parameter.");
     }
     get(this.url + "?cmd=getCaseLists&cancer_study_id=" + cancerStudyId, this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -139,7 +155,7 @@ CGDS.prototype.getProfileData = function (caseSetId, geneticProfileId, geneList,
         geneList = geneList.join("+");
     }
     get(this.url + "?cmd=getProfileData&case_set_id=" + caseSetId + "&genetic_profile_id=" + geneticProfileId + "&gene_list=" + geneList, this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -171,7 +187,7 @@ CGDS.prototype.getMutationData = function (geneticProfileId, geneList, caseSetId
         url = url + "&case_set_id=" + caseSetId;
     }
     get(url, this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
@@ -183,13 +199,13 @@ CGDS.prototype.getClinicalData = function (caseSetId, callback) {
         throw new Error("Please provide a callback parameter.");
     }
     get(this.url + "?cmd=getClinicalData&case_set_id=" + caseSetId, this.proxy, function (err, res) {
-        callback(null, toJSON(res));
+        toJSON(res, callback);
     });
 };
 
 module.exports = CGDS;
 
-},{"http":11,"url":6}],2:[function(require,module,exports){
+},{"http":12,"url":6}],2:[function(require,module,exports){
 // UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
@@ -3355,7 +3371,9 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],11:[function(require,module,exports){
+},{}],"cgds":[function(require,module,exports){
+module.exports=require('2KAbzZ');
+},{}],12:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
@@ -3417,7 +3435,7 @@ var xhrHttp = (function () {
     }
 })();
 
-},{"./lib/request":12,"events":3}],12:[function(require,module,exports){
+},{"./lib/request":13,"events":3}],13:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var concatStream = require('concat-stream')
@@ -3550,7 +3568,7 @@ var indexOf = function (xs, x) {
     return -1;
 };
 
-},{"./response":13,"buffer":9,"concat-stream":15,"stream":5}],13:[function(require,module,exports){
+},{"./response":14,"buffer":9,"concat-stream":15,"stream":5}],14:[function(require,module,exports){
 var Stream = require('stream');
 
 var Response = module.exports = function (res) {
@@ -3671,9 +3689,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":5}],"cgds":[function(require,module,exports){
-module.exports=require('2KAbzZ');
-},{}],15:[function(require,module,exports){
+},{"stream":5}],15:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer").Buffer;var stream = require('stream')
 var util = require('util')
 
