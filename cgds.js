@@ -1,5 +1,5 @@
 require=(function(e,t,n){function i(n,s){if(!t[n]){if(!e[n]){var o=typeof require=="function"&&require;if(!s&&o)return o(n,!0);if(r)return r(n,!0);throw new Error("Cannot find module '"+n+"'")}var u=t[n]={exports:{}};e[n][0].call(u.exports,function(t){var r=e[n][1][t];return i(r?r:t)},u,u.exports)}return t[n].exports}var r=typeof require=="function"&&require;for(var s=0;s<n.length;s++)i(n[s]);return i})({"2KAbzZ":[function(require,module,exports){
-(function(Buffer){"use strict";
+"use strict";
 
 var http, url, get, toJSON, CGDS;
 
@@ -17,18 +17,19 @@ get = function (uri, proxy, callback) {
     } else {
         options = url.parse(uri);
     }
+ // Browserify does not default to port 80 if the page
+ // is served from a port other than 80.
+    options.port = 80;
     http.get(options, function (res) {
         var body;
-        body = new Buffer(0);
+     // Browserify does not seem to work well with buffers ("no method copy"),
+     // therefore fall back to strings.
+        body = "";
         res.on("data", function (chunk) {
-            var buffer;
-            buffer = new Buffer(body.length + chunk.length);
-            body.copy(buffer);
-            chunk.copy(buffer, body.length);
-            body = buffer;
+            body += chunk;
         });
         res.on("end", function () {
-            callback(null, body.toString("utf8"));
+            callback(null, body);
         });
     });
 };
@@ -188,9 +189,8 @@ CGDS.prototype.getClinicalData = function (caseSetId, callback) {
 
 module.exports = CGDS;
 
-})(require("__browserify_Buffer").Buffer)
-},{"__browserify_Buffer":16,"http":11,"url":6}],2:[function(require,module,exports){
-(function(){// UTILITY
+},{"http":11,"url":6}],2:[function(require,module,exports){
+// UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
 var pSlice = Array.prototype.slice;
@@ -505,9 +505,8 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-})()
 },{"buffer":9,"util":7}],3:[function(require,module,exports){
-(function(process){if (!process.EventEmitter) process.EventEmitter = function () {};
+var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
 var isArray = typeof Array.isArray === 'function'
@@ -691,7 +690,17 @@ EventEmitter.prototype.listeners = function(type) {
   return this._events[type];
 };
 
-})(require("__browserify_process"))
+EventEmitter.listenerCount = function(emitter, type) {
+  var ret;
+  if (!emitter._events || !emitter._events[type])
+    ret = 0;
+  else if (typeof emitter._events[type] === 'function')
+    ret = 1;
+  else
+    ret = emitter._events[type].length;
+  return ret;
+};
+
 },{"__browserify_process":17}],4:[function(require,module,exports){
 
 /**
@@ -2178,7 +2187,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
 };
 
 },{}],9:[function(require,module,exports){
-(function(){var assert = require('assert');
+var assert = require('assert');
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
 Buffer.poolSize = 8192;
@@ -3260,7 +3269,6 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-})()
 },{"./buffer_ieee754":8,"assert":2,"base64-js":10}],10:[function(require,module,exports){
 (function (exports) {
 	'use strict';
@@ -3410,7 +3418,7 @@ var xhrHttp = (function () {
 })();
 
 },{"./lib/request":12,"events":3}],12:[function(require,module,exports){
-(function(){var Stream = require('stream');
+var Stream = require('stream');
 var Response = require('./response');
 var concatStream = require('concat-stream')
 var Buffer = require('buffer')
@@ -3542,8 +3550,7 @@ var indexOf = function (xs, x) {
     return -1;
 };
 
-})()
-},{"./response":13,"buffer":9,"concat-stream":14,"stream":5}],13:[function(require,module,exports){
+},{"./response":13,"buffer":9,"concat-stream":15,"stream":5}],13:[function(require,module,exports){
 var Stream = require('stream');
 
 var Response = module.exports = function (res) {
@@ -3664,8 +3671,10 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":5}],14:[function(require,module,exports){
-(function(Buffer){var stream = require('stream')
+},{"stream":5}],"cgds":[function(require,module,exports){
+module.exports=require('2KAbzZ');
+},{}],15:[function(require,module,exports){
+var Buffer=require("__browserify_Buffer").Buffer;var stream = require('stream')
 var util = require('util')
 
 function ConcatStream(cb) {
@@ -3714,10 +3723,7 @@ module.exports = function(cb) {
 
 module.exports.ConcatStream = ConcatStream
 
-})(require("__browserify_Buffer").Buffer)
-},{"__browserify_Buffer":16,"stream":5,"util":7}],"cgds":[function(require,module,exports){
-module.exports=require('2KAbzZ');
-},{}],16:[function(require,module,exports){
+},{"__browserify_Buffer":16,"stream":5,"util":7}],16:[function(require,module,exports){
 require=(function(e,t,n,r){function i(r){if(!n[r]){if(!t[r]){if(e)return e(r);throw new Error("Cannot find module '"+r+"'")}var s=n[r]={exports:{}};t[r][0](function(e){var n=t[r][1][e];return i(n?n:e)},s,s.exports)}return n[r].exports}for(var s=0;s<r.length;s++)i(r[s]);return i})(typeof require!=="undefined"&&require,{1:[function(require,module,exports){
 // UTILITY
 var util = require('util');
