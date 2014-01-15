@@ -1,20 +1,19 @@
 {
     "name": "cgds",
-    "description": "A module for querying the Cancer Genomics Data Server (CGDS).",
     "version": "0.1.3",
-    "author": {
-        "name": "Alexander Grüneberg",
-        "email": "alexander.grueneberg@googlemail.com"
-    },
+    "description": "A module for querying the Cancer Genomics Data Server (CGDS).",
+    "keywords": ["cbio", "cancer", "genomics", "tcga", "mskcc"],
+    "bugs": "https://github.com/agrueneberg/CGDS-JS/issues",
+    "license": "MIT",
+    "author": "Alexander Grüneberg <alexander.grueneberg@googlemail.com>",
+    "main": "./lib/cgds.js",
     "repository": {
         "type": "git",
-        "url": "https://github.com/agrueneberg/CGDS-JS"
+        "url": "https://github.com/agrueneberg/CGDS-JS.git"
     },
-    "licenses": [{
-        "type": "The MIT License",
-        "url": "http://www.opensource.org/licenses/mit-license.php"
-    }],
-    "main": "./lib/cgds.js",
+    "scripts": {
+        "test": "./node_modules/.bin/mocha"
+    },
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-browserify": "~1.2.1",
@@ -25,8 +24,5 @@
     },
     "engines": {
         "node": ">= 0.10.0"
-    },
-    "scripts": {
-        "test": "./node_modules/.bin/mocha"
     }
 }
