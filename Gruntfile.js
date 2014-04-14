@@ -7,7 +7,7 @@ module.exports = function (grunt) {
                 src: "lib/<%= pkg.name %>.js",
                 dest: "dist/<%= pkg.name %>.js",
                 options: {
-                    alias: "lib/<%= pkg.name %>.js:<%= pkg.name %>"
+                    alias: ["lib/<%= pkg.name %>.js:<%= pkg.name %>"]
                 }
             }
         },
