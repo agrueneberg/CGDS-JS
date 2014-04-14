@@ -15,12 +15,12 @@
         "test": "./node_modules/.bin/mocha"
     },
     "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-browserify": "~1.2.1",
-        "grunt-contrib-uglify": "~0.2.2",
-        "browserify": "~2.25.0",
-        "mocha": "~1.12.0",
-        "expect.js": "~0.2.0"
+        "grunt": "~0.4.4",
+        "grunt-browserify": "~2.0.7",
+        "grunt-contrib-uglify": "~0.4.0",
+        "browserify": "~3.41.0",
+        "mocha": "~1.18.2",
+        "expect.js": "~0.3.1"
     },
     "engines": {
         "node": ">= 0.10.0"
