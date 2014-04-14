@@ -250,7 +250,7 @@ describe("CDGS-JS", function () {
             it("should return an error if the genetic profile does not exist", function (done) {
                 cgds.getProfileData("brca_tcga_3way_complete", "foo", "TP53", function (err, res) {
                     expect(err).to.not.be(null);
-                    expect(err.message).to.be("No genetic profile available for genetic_profile_id:  foo.");
+                    expect(err.message).to.be("Error: Problem when identifying a cancer study for the request.");
                     expect(res).to.be(null);
                     done();
                 });
@@ -295,7 +295,7 @@ describe("CDGS-JS", function () {
                     expect(err).to.be(null);
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "genetic_profile_id"]);
+                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "reference_read_count_tumor", "variant_read_count_tumor", "reference_read_count_normal", "variant_read_count_normal", "genetic_profile_id"]);
                     done();
                 });
             });
@@ -304,7 +304,7 @@ describe("CDGS-JS", function () {
                     expect(err).to.be(null);
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "genetic_profile_id"]);
+                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "reference_read_count_tumor", "variant_read_count_tumor", "reference_read_count_normal", "variant_read_count_normal", "genetic_profile_id"]);
                     done();
                 });
             });
@@ -313,7 +313,7 @@ describe("CDGS-JS", function () {
                     expect(err).to.be(null);
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "genetic_profile_id"]);
+                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "reference_read_count_tumor", "variant_read_count_tumor", "reference_read_count_normal", "variant_read_count_normal", "genetic_profile_id"]);
                     done();
                 });
             });
@@ -322,7 +322,7 @@ describe("CDGS-JS", function () {
                     expect(err).to.be(null);
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "genetic_profile_id"]);
+                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "reference_read_count_tumor", "variant_read_count_tumor", "reference_read_count_normal", "variant_read_count_normal", "genetic_profile_id"]);
                     done();
                 });
             });
@@ -331,7 +331,7 @@ describe("CDGS-JS", function () {
                     expect(err).to.be(null);
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "genetic_profile_id"]);
+                    expect(Object.keys(res[0])).to.eql(["entrez_gene_id", "gene_symbol", "case_id", "sequencing_center", "mutation_status", "mutation_type", "validation_status", "amino_acid_change", "functional_impact_score", "xvar_link", "xvar_link_pdb", "xvar_link_msa", "chr", "start_position", "end_position", "reference_allele", "variant_allele", "reference_read_count_tumor", "variant_read_count_tumor", "reference_read_count_normal", "variant_read_count_normal", "genetic_profile_id"]);
                     done();
                 });
             });
@@ -374,7 +374,7 @@ describe("CDGS-JS", function () {
                 cgds.getClinicalData("brca_tcga_3way_complete", function (err, res) {
                     expect(res).to.be.an(Array);
                     expect(res.length).to.be.greaterThan(0);
-                    expect(Object.keys(res[0])).to.eql(["case_id", "overall_survival_months", "overall_survival_status", "disease_free_survival_months", "disease_free_survival_status", "age_at_diagnosis"]);
+                    expect(Object.keys(res[0])).to.eql(["CASE_ID", "DFS_MONTHS", "DFS_STATUS", "OS_MONTHS", "OS_STATUS"]);
                     done();
                 });
             });
