@@ -32,6 +32,8 @@ describe("CDGS-JS", function () {
 
         var cgds;
 
+        this.timeout(5000);
+
         beforeEach(function () {
             cgds = new CGDS("http://www.cbioportal.org/public-portal/webservice.do");
         });
