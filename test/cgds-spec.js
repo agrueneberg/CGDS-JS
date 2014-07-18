@@ -6,9 +6,19 @@ CGDS = require("../lib/cgds.js");
 describe("CDGS-JS", function () {
 
     describe("Constructor", function () {
-        it("should throw an error if a URL parameter is not provided", function () {
+        it("should use default endpoint if a URL parameter is not provided", function () {
+            var cgds;
+            cgds = new CGDS();
+            expect(cgds.url).to.be("http://www.cbioportal.org/public-portal/webservice.do");
+        });
+        it("should use default endpoint if an empty object is passed", function () {
+            var cgds;
+            cgds = new CGDS({});
+            expect(cgds.url).to.be("http://www.cbioportal.org/public-portal/webservice.do");
+        });
+        it("should throw an error if an invalid parameter is passed", function () {
             expect(function () {
-                new CGDS();
+                new CGDS(5);
             }).to.throwException(function (e) {
                 expect(e).to.be.a(Error);
                 expect(e.message).to.be("Please provide a URL parameter.");
