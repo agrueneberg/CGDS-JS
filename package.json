@@ -1,6 +1,6 @@
 {
     "name": "cgds",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A module for querying the Cancer Genomics Data Server (CGDS).",
     "keywords": ["cbio", "cancer", "genomics", "tcga", "mskcc"],
     "bugs": "https://github.com/agrueneberg/CGDS-JS/issues",
