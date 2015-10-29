@@ -1,6 +1,8 @@
 CGDS-JS
 =======
 
+[![Project Status: Unsupported - The project has reached a stable, usable state but the author(s) have ceased all work on it. A new maintainer may be desired.](http://www.repostatus.org/badges/0.1.0/unsupported.svg)](http://www.repostatus.org/#unsupported)
+
 A Node.js and browser module for querying the Cancer Genomics Data Server (CGDS), hosted by the Computational Biology Center at Memorial-Sloan-Kettering Cancer Center (MSKCC). Read more about this service at the [cBio Cancer Genomics Portal](http://www.cbioportal.org/public-portal/).
 
 Example
